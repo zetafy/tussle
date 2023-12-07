@@ -23,11 +23,11 @@ class aclient(commands.Bot):
             if filename.endswith('.py'):
                 self.all_cogs.append(filename[:-3])
                 # Uncomment the following as labelde to get error tracebacks.
-                # try: # uncomment
-                await self.load_extension(f'cogs.{filename[:-3]}')
-                self.active_cogs.append(filename[:-3])
-                # except: # uncomment
-                # print(f"Failed to load: {filename[:-3]}") # uncomment
+                try: # uncomment
+                    await self.load_extension(f'cogs.{filename[:-3]}')
+                    self.active_cogs.append(filename[:-3])
+                except: # uncomment
+                    print(f"Failed to load: {filename[:-3]}") # uncomment
 
     async def on_ready(self):
         # await self.wait_until_ready()

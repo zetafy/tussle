@@ -106,31 +106,31 @@ class config(commands.Cog):
 
 
 
-    # @commands.command()
-    # async def sync(self, ctx):
-    #     '''
-    #     Sync command: syncs the command tree to discord's cache.
-    #     Only allowed to be run by lead devs. 
-    #     Run this command when you:
-    #     - updated a slash command's parameters, name, or description
-    #     - Added/removed a slash command
-    #     You don't have to sync if the logic of an existing slash command has been updated.
+    @commands.command()
+    async def resync(self, ctx):
+        '''
+        Sync command: syncs the command tree to discord's cache.
+        Only allowed to be run by lead devs. 
+        Run this command when you:
+        - updated a slash command's parameters, name, or description
+        - Added/removed a slash command
+        You don't have to sync if the logic of an existing slash command has been updated.
 
-    #     -----
-    #     parameters:
-    #         self
-    #         ctx
-    #     returns:
-    #         None
-    #     '''
-    #     # Checking if command ran is by authorized dev
-    #     ids = self.getDevIDs()
-    #     if ctx.author.id not in ids:
-    #         return
+        -----
+        parameters:
+            self
+            ctx
+        returns:
+            None
+        '''
+        # Checking if command ran is by authorized dev
+        ids = self.getDevIDs()
+        if ctx.author.id not in ids:
+            return
         
-    #     print("Syncing commands")
-    #     await self.client.tree.sync()
-    #     await ctx.reply("Successfully synced commands.")
+        print("Syncing commands")
+        await self.client.tree.sync()
+        await ctx.reply("Successfully synced commands.")
 
 async def setup(client:commands.Bot) -> None:
     await client.add_cog(config(client))
