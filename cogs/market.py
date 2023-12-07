@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from .data import GATHERERS_DICT, MILITARY_DICT, BOOSTING_DICT, BUILDINGS_DICT
+from .data import NATURAL_RESOURCES_DICT, CONSUMABLES_DICT, TOOLS_DICT, GATHERERS_DICT, MILITARY_DICT, BOOSTING_DICT, BUILDINGS_DICT
 
 # ModuleNotFoundError handler
 class MarketErrorHandler(commands.Cog):
@@ -75,25 +75,27 @@ class MarketGoods():
         """
         view = discord.ui.View()
             
-        # Dropdown options - to be substituted dynamically with database interaction
-        natural_resources = [
-            discord.SelectOption(label="Wood ($0)", value="Wood"),
-            discord.SelectOption(label="Coal ($0)", value="Coal"),
-            discord.SelectOption(label="Iron ($0)", value="Iron")
-        ]
-        
-        consumables = [
-            discord.SelectOption(label="Loads of Bread ($0)", value="Loads of Bread"),
-            discord.SelectOption(label="Loads of Beef ($0)", value="Loads of Beef"),
-            discord.SelectOption(label="Loads of Fish ($0)", value="Loads of Fish")
-        ]
-        
-        tools = [
-            discord.SelectOption(label="Tools Item A", value="Tools Item A"),
-            discord.SelectOption(label="Tools Item B", value="Tools Item B"),
-            discord.SelectOption(label="Tools Item C", value="Tools Item C")
-        ]
-        
+        natural_resources = []
+        for name, details in NATURAL_RESOURCES_DICT.items():
+            value = name
+            label = value + f" (${str(details['cost'])})"
+            option = discord.SelectOption(label=label, value=value)
+            natural_resources.append(option)
+            
+        consumables = []
+        for name, details in CONSUMABLES_DICT.items():
+            value = name
+            label = value + f" (${str(details['cost'])})"
+            option = discord.SelectOption(label=label, value=value)
+            consumables.append(option)
+            
+        tools = []
+        for name, details in TOOLS_DICT.items():
+            value = name
+            label = value + f" (${str(details['cost'])})"
+            option = discord.SelectOption(label=label, value=value)
+            tools.append(option)
+            
         # Dropdown objects
         natural_resources_dropdown = discord.ui.Select(placeholder='Natural Resources', options=natural_resources)
         consumables_dropdown = discord.ui.Select(placeholder='Consumables', options=consumables)
@@ -114,7 +116,13 @@ class MarketGoods():
     
     async def purchase_confirmation(self, inter):
         self.chosen_item = inter.data['values'][0]  # Extract the selected value
-        msg = f"You have chosen to purchase '{self.chosen_item}' for $0"
+        dictionaries = [NATURAL_RESOURCES_DICT, CONSUMABLES_DICT, TOOLS_DICT]
+        for dictionary in dictionaries:
+            for name, details in dictionary.items():
+                if name == self.chosen_item:
+                    cost = details["cost"]
+                    break
+        msg = f"You have chosen to purchase '{self.chosen_item}' for $" + str(cost)
         embed = discord.Embed(title="Are you sure?", description=msg, color=self.color)
     
         view = discord.ui.View()

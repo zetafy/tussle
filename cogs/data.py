@@ -17,6 +17,44 @@ class DataErrorHandler(commands.Cog):
         
 async def setup(client):
     await client.add_cog(DataErrorHandler(client))
+
+# =============================================== [ Goods Data ] ===============================================
+
+NATURAL_RESOURCES_DICT = {
+    "Wood": {
+        "cost": 0,
+    },
+    "Coal": {
+        "cost": 0,
+    },
+    "Iron": {
+        "cost": 0,
+    }
+}
+
+CONSUMABLES_DICT = {
+    "Loads of Bread": {
+        "cost": 0,
+    },
+    "Loads of Beef": {
+        "cost": 0,
+    },
+    "Loads of Fish": {
+        "cost": 0,
+    }
+}
+
+TOOLS_DICT = {
+    "A": {
+        "cost": 0,
+    },
+    "B": {
+        "cost": 0,
+    },
+    "C": {
+        "cost": 0,
+    }
+}
     
 # =============================================== [ Services Data ] ===============================================
 GATHERERS_DICT = {
